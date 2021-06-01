@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-   private float speed = 3.0f;
-   private Rigidbody enemyRb; 
-   private GameObject player;
+   int difficulty;
+   float speed = 3.0f;
+
+   Rigidbody enemyRb;
+   GameObject player;
 
    // Start is called before the first frame update
    void Start()
@@ -27,5 +29,10 @@ public class Enemy : MonoBehaviour
       {
          Destroy(gameObject);
       }
+   }
+
+   float GetSpeed()
+   {
+      return speed * (1 + (difficulty * 0.1f));
    }
 }

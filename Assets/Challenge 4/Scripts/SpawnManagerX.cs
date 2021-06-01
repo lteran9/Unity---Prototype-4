@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SpawnManagerX : MonoBehaviour
 {
-   public GameObject enemyPrefab;
+   [SerializeField] GameObject[] enemies;
    public GameObject powerupPrefab;
 
    private float spawnRangeX = 10;
@@ -15,6 +16,11 @@ public class SpawnManagerX : MonoBehaviour
    public int waveCount = 1;
 
    public GameObject player;
+
+   void Start()
+   {
+      if (enemies == null) enemies = new GameObject[0];
+   }
 
    // Update is called once per frame
    void Update()
@@ -41,7 +47,7 @@ public class SpawnManagerX : MonoBehaviour
       var powerupSpawnOffset = new Vector3(0, 0, -15); // make powerups spawn at player end
       var speedIncrease = 10 * enemiesToSpawn;
 
-      var enemyScript = enemyPrefab.GetComponent<EnemyX>();
+      var enemyScript = enemies.FirstOrDefault().GetComponent<EnemyX>();
       enemyScript.speed = speedIncrease;
 
       // If no powerups remain, spawn a powerup
@@ -53,7 +59,7 @@ public class SpawnManagerX : MonoBehaviour
       // Spawn number of enemy balls based on wave number
       for (int i = 0; i < enemiesToSpawn; i++)
       {
-         Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
+         Instantiate(enemies[0], GenerateSpawnPosition(), enemies[0].transform.rotation);
       }
 
       waveCount++;

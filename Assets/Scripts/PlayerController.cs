@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-   public bool hasPowerUp;
+   bool hasPowerUp;
 
-   public float speed = 5.0f;
-   public float powerUpStrength = 10.0f;
-   
-   public GameObject powerUpIndicator;
-   private GameObject focalPoint;
-   private Rigidbody playerRb;
+   float speed = 5.0f;
+   float powerUpStrength = 10.0f;
+
+   Rigidbody playerRb;
+   GameObject focalPoint;
+
+   [SerializeField] GameObject powerUpIndicator;
 
    // Start is called before the first frame update
    void Start()
@@ -23,11 +24,13 @@ public class PlayerController : MonoBehaviour
    // Update is called once per frame
    void Update()
    {
-      float verticalInput = Input.GetAxis("Vertical");
-
-      playerRb.AddForce(focalPoint.transform.forward * verticalInput * speed);
-
+      playerRb.AddForce(focalPoint.transform.forward * Input.GetAxis("Vertical") * speed);
       powerUpIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
+
+      if (transform.position.y < -10)
+      {
+         Destroy(gameObject);
+      }
    }
 
    void OnTriggerEnter(Collider other)

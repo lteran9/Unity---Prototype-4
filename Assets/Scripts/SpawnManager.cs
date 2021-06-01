@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-   public int enemyCount;
-   public int waveNumber = 1;
+   int enemyCount;
+   int waveNumber = 1;
 
-   public GameObject enemyPrefab;
-   public GameObject powerUpPrefab;
+   [SerializeField] GameObject enemyPrefab;
+   [SerializeField] GameObject powerUpPrefab;
 
    // Start is called before the first frame update
    void Start()
@@ -18,11 +18,11 @@ public class SpawnManager : MonoBehaviour
    }
 
    // Update is called once per frame
-   void Update()
+   void FixedUpdate()
    {
       enemyCount = FindObjectsOfType<Enemy>().Length;
 
-      if (enemyCount <= 0) 
+      if (enemyCount <= 0)
       {
          waveNumber++;
          SpawnEnemyWave(waveNumber);
