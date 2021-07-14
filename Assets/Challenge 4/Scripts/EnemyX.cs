@@ -2,39 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyX : MonoBehaviour
+namespace Prototype4.Challenge4
 {
-   public float speed;
-
-   private Rigidbody enemyRb;
-   private GameObject playerGoal;
-
-   // Start is called before the first frame update
-   void Start()
+   public class EnemyX : MonoBehaviour
    {
-      enemyRb = GetComponent<Rigidbody>();
-      playerGoal = GameObject.Find("Player Goal");
-   }
+      public float speed;
 
-   // Update is called once per frame
-   void Update()
-   {
-      // Set enemy direction towards player goal and move there
-      Vector3 lookDirection = (playerGoal.transform.position - transform.position).normalized;
+      Rigidbody enemyRb;
+      GameObject playerGoal;
 
-      enemyRb.AddForce(lookDirection * speed * Time.deltaTime);
-   }
-
-   private void OnCollisionEnter(Collision other)
-   {
-      // If enemy collides with either goal, destroy it
-      if (other.gameObject.name == "Enemy Goal")
+      // Start is called before the first frame update
+      void Start()
       {
-         Destroy(gameObject);
+         enemyRb = GetComponent<Rigidbody>();
+         playerGoal = GameObject.Find("Player Goal");
       }
-      else if (other.gameObject.name == "Player Goal")
+
+      // Update is called once per frame
+      void Update()
       {
-         Destroy(gameObject);
+         // Set enemy direction towards player goal and move there
+         Vector3 lookDirection = (playerGoal.transform.position - transform.position).normalized;
+
+         enemyRb.AddForce(lookDirection * speed * Time.deltaTime);
+      }
+
+      void OnCollisionEnter(Collision other)
+      {
+         // If enemy collides with either goal, destroy it
+         if (other.gameObject.name == "Enemy Goal")
+         {
+            Destroy(gameObject);
+         }
+         else if (other.gameObject.name == "Player Goal")
+         {
+            Destroy(gameObject);
+         }
       }
    }
 }

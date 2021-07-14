@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateCamera : MonoBehaviour
+namespace Prototype4
 {
-   [SerializeField] float rotationSpeed;
-
-   // Update is called once per frame
-   void Update()
+   public class RotateCamera : MonoBehaviour
    {
-      transform.Rotate(Vector3.up, Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime);
+      [SerializeField] float rotationSpeed;
+
+      // Update is called once per frame
+      void Update()
+      {
+         transform.Rotate(Vector3.up, Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime);
+      }
    }
 }
