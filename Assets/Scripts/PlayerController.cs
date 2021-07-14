@@ -29,7 +29,7 @@ namespace Prototype4
          playerRb.AddForce(focalPoint.transform.forward * Input.GetAxis("Vertical") * speed);
          powerUpIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
 
-         if (transform.position.y < -10)
+         if (transform.position.y < -20)
          {
             Destroy(gameObject);
          }

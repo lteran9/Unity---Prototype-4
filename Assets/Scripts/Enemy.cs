@@ -22,14 +22,17 @@ namespace Prototype4
       // Update is called once per frame
       void Update()
       {
-         // Get the Vector3 for the force direction
-         var lookDirection = (player.transform.position - transform.position).normalized;
-
-         enemyRb.AddForce(lookDirection * speed);
-
-         if (transform.position.y < -10)
+         if (player != null)
          {
-            Destroy(gameObject);
+            // Get the Vector3 for the force direction
+            var lookDirection = (player.transform.position - transform.position).normalized;
+
+            enemyRb.AddForce(lookDirection * speed);
+
+            if (transform.position.y < -20)
+            {
+               Destroy(gameObject);
+            }
          }
       }
 
