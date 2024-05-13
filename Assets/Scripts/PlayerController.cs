@@ -6,25 +6,25 @@ namespace Prototype4
 {
    public class PlayerController : MonoBehaviour
    {
-      bool hasPowerUp;
+      private bool hasPowerUp;
 
-      float speed = 5.0f;
-      float powerUpStrength = 10.0f;
+      private float speed = 5.0f;
+      private float powerUpStrength = 10.0f;
 
-      Rigidbody playerRb;
-      GameObject focalPoint;
+      private Rigidbody playerRb;
+      private GameObject focalPoint;
 
-      [SerializeField] GameObject powerUpIndicator;
+      [SerializeField] private GameObject powerUpIndicator;
 
       // Start is called before the first frame update
-      void Start()
+      private void Start()
       {
          playerRb = GetComponent<Rigidbody>();
          focalPoint = GameObject.Find("Focal Point");
       }
 
       // Update is called once per frame
-      void Update()
+      private void Update()
       {
          playerRb.AddForce(focalPoint.transform.forward * Input.GetAxis("Vertical") * speed);
          powerUpIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
@@ -35,7 +35,7 @@ namespace Prototype4
          }
       }
 
-      void OnTriggerEnter(Collider other)
+      private void OnTriggerEnter(Collider other)
       {
          if (other.CompareTag("PowerUp"))
          {
@@ -46,7 +46,7 @@ namespace Prototype4
          }
       }
 
-      void OnCollisionEnter(Collision other)
+      private void OnCollisionEnter(Collision other)
       {
          if (other.gameObject.CompareTag("Enemy") && hasPowerUp)
          {
@@ -57,7 +57,7 @@ namespace Prototype4
          }
       }
 
-      IEnumerator PowerUpCountdownRoutine()
+      private IEnumerator PowerUpCountdownRoutine()
       {
          yield return new WaitForSeconds(7);
          hasPowerUp = false;

@@ -7,21 +7,21 @@ namespace Prototype4
 {
    public class GameManager : MonoBehaviour
    {
-      bool isGameRunning = false;
+      private bool isGameRunning = false;
 
-      [SerializeField] GameObject _menu = default;
-      [SerializeField] GameObject _player = default;
-      [SerializeField] GameObject _spawnManager = default;
-      [SerializeField] GameObject _gameOverPanel = default;
+      [SerializeField] private GameObject _menu = default;
+      [SerializeField] private GameObject _player = default;
+      [SerializeField] private GameObject _spawnManager = default;
+      [SerializeField] private GameObject _gameOverPanel = default;
 
       // Start is called before the first frame update
-      void Start()
+      private void Start()
       {
          isGameRunning = true;
       }
 
       // Update is called once per frame
-      void Update()
+      private void Update()
       {
          if (IsGameRunning() && _player == null)
          {

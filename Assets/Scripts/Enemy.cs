@@ -6,21 +6,21 @@ namespace Prototype4
 {
    public class Enemy : MonoBehaviour
    {
-      int difficulty;
-      float speed = 3.0f;
+      private int difficulty;
+      private float speed = 3.0f;
 
       Rigidbody enemyRb;
-      GameObject player;
+      private GameObject player;
 
       // Start is called before the first frame update
-      void Start()
+      private void Start()
       {
          enemyRb = GetComponent<Rigidbody>();
          player = GameObject.Find("Player");
       }
 
       // Update is called once per frame
-      void Update()
+      private void Update()
       {
          if (player != null)
          {
@@ -36,7 +36,7 @@ namespace Prototype4
          }
       }
 
-      float GetSpeed()
+      private float GetSpeed()
       {
          return speed * (1 + (difficulty * 0.1f));
       }
