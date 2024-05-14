@@ -12,15 +12,19 @@ namespace Prototype4
       private float powerUpStrength = 10.0f;
 
       private Rigidbody playerRb;
-      private GameObject focalPoint;
 
+      [SerializeField] private GameObject focalPoint;
       [SerializeField] private GameObject powerUpIndicator;
 
       // Start is called before the first frame update
       private void Start()
       {
          playerRb = GetComponent<Rigidbody>();
-         focalPoint = GameObject.Find("Focal Point");
+
+         if (focalPoint == null)
+         {
+            focalPoint = GameObject.Find("Focal Point");
+         }
       }
 
       // Update is called once per frame

@@ -9,7 +9,7 @@ namespace Prototype4
       private int difficulty;
       private float speed = 3.0f;
 
-      Rigidbody enemyRb;
+      private Rigidbody enemyRb;
       private GameObject player;
 
       // Start is called before the first frame update

@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Prototype4
 {
    public class GameManager : MonoBehaviour
    {
-      private bool isGameRunning = false;
+      [SerializeField] private bool isGameRunning = false;
 
       [SerializeField] private GameObject _menu = default;
       [SerializeField] private GameObject _player = default;
@@ -17,7 +16,7 @@ namespace Prototype4
       // Start is called before the first frame update
       private void Start()
       {
-         isGameRunning = true;
+
       }
 
       // Update is called once per frame
@@ -31,10 +30,13 @@ namespace Prototype4
 
       public void StartGame()
       {
-         Debug.Log("Start Game");
+         // Turn off menu
          _menu.SetActive(false);
+         // Activate player and spawn manager
          _player.SetActive(true);
          _spawnManager.SetActive(true);
+         // Set isGameRunning to true
+         isGameRunning = true;
       }
 
       public void Settings()
@@ -44,13 +46,22 @@ namespace Prototype4
 
       public void QuitGame()
       {
-         Debug.Log("Quit Game");
+#if UNITY_EDITOR
+         UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
       }
 
       public void EndGame()
       {
-         isGameRunning = false;
          _gameOverPanel.SetActive(true);
+         isGameRunning = false;
+      }
+
+      public void RestartGame()
+      {
+         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
       }
 
       public bool IsGameRunning()
