@@ -1,4 +1,5 @@
 using System;
+using Prototype4.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,10 +9,14 @@ namespace Prototype4
    {
       [SerializeField] private bool isGameRunning = false;
 
-      [SerializeField] private GameObject _menu = default;
       [SerializeField] private GameObject _player = default;
       [SerializeField] private GameObject _spawnManager = default;
-      [SerializeField] private GameObject _gameOverPanel = default;
+
+      [Header("Broadcasts on")]
+      [SerializeField] private VoidEventChannelSO _endGame = default;
+
+      [Header("Listens on")]
+      [SerializeField] private VoidEventChannelSO _startGame = default;
 
       // Start is called before the first frame update
       private void Start()
@@ -28,10 +33,24 @@ namespace Prototype4
          }
       }
 
-      public void StartGame()
+      private void OnEnable()
       {
-         // Turn off menu
-         _menu.SetActive(false);
+         if (_startGame != null)
+         {
+            _startGame.OnEventRaised += StartGame;
+         }
+      }
+
+      private void OnDisable()
+      {
+         if (_startGame != null)
+         {
+            _startGame.OnEventRaised -= StartGame;
+         }
+      }
+
+      private void StartGame()
+      {
          // Activate player and spawn manager
          _player.SetActive(true);
          _spawnManager.SetActive(true);
@@ -39,29 +58,11 @@ namespace Prototype4
          isGameRunning = true;
       }
 
-      public void Settings()
+      private void EndGame()
       {
-         Debug.Log("Settings");
-      }
-
-      public void QuitGame()
-      {
-#if UNITY_EDITOR
-         UnityEditor.EditorApplication.isPlaying = false;
-#else
-         Application.Quit();
-#endif
-      }
-
-      public void EndGame()
-      {
-         _gameOverPanel.SetActive(true);
          isGameRunning = false;
-      }
-
-      public void RestartGame()
-      {
-         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+         // Send event message
+         _endGame?.RaiseEvent();
       }
 
       public bool IsGameRunning()
