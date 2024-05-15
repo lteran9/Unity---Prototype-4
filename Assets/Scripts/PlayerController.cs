@@ -19,7 +19,7 @@ namespace Prototype4
       // Start is called before the first frame update
       private void Start()
       {
-         playerRb = GetComponent<Rigidbody>();
+         playerRb = GetComponentInChildren<Rigidbody>();
 
          if (focalPoint == null)
          {
@@ -33,9 +33,11 @@ namespace Prototype4
          playerRb.AddForce(focalPoint.transform.forward * Input.GetAxis("Vertical") * speed);
          powerUpIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
 
+         // If we fall off go ahead and destroy player
          if (transform.position.y < -20)
          {
-            Destroy(gameObject);
+            // Destroy parent game object which will destroy this game object
+            Destroy(transform.parent.gameObject);
          }
       }
 

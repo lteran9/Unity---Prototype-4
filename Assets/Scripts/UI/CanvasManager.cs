@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Prototype4.Events.ScriptableObjects;
@@ -14,6 +15,7 @@ namespace Prototype4
       [SerializeField] private GameObject _menuPanel = default;
       [SerializeField] private GameObject _settingsPanel = default;
       [SerializeField] private GameObject _gameOverPanel = default;
+      [SerializeField] private GameObject _gameplayPanel = default;
 
       [Header("Broadcasts on")]
       [SerializeField] private VoidEventChannelSO _startGame = default;
@@ -40,7 +42,9 @@ namespace Prototype4
       public void StartGame()
       {
          // Turn off menu
-         _menuPanel.SetActive(false);
+         _menuPanel?.SetActive(false);
+         // Display gameplay panel
+         _gameplayPanel?.SetActive(true);
          // Send event message
          _startGame?.RaiseEvent();
       }
@@ -48,9 +52,9 @@ namespace Prototype4
       public void Settings()
       {
          // Turn off menu
-         _menuPanel.SetActive(false);
+         _menuPanel?.SetActive(false);
          // Activate settings
-         _settingsPanel.SetActive(true);
+         _settingsPanel?.SetActive(true);
       }
 
       public void QuitGame()
@@ -65,14 +69,16 @@ namespace Prototype4
       public void Back()
       {
          // Activate settings
-         _settingsPanel.SetActive(false);
+         _settingsPanel?.SetActive(false);
          // Turn off menu
-         _menuPanel.SetActive(true);
+         _menuPanel?.SetActive(true);
       }
 
       public void EndGame()
       {
-         _gameOverPanel.SetActive(true);
+         Debug.Log(nameof(EndGame));
+         _gameplayPanel?.SetActive(false);
+         _gameOverPanel?.SetActive(true);
       }
 
       public void RestartGame()

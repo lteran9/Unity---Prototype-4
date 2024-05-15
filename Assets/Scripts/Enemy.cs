@@ -16,7 +16,7 @@ namespace Prototype4
       private void Start()
       {
          enemyRb = GetComponent<Rigidbody>();
-         player = GameObject.Find("Player");
+         player = GameObject.Find("Sphere");
       }
 
       // Update is called once per frame
