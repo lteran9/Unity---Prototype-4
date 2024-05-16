@@ -5,7 +5,7 @@ using Prototype4.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Prototype4
+namespace Prototype4.UI
 {
    /// <summary>
    /// The canvas manager handles the panel views like the Menu, Settings, GameOver, etc...

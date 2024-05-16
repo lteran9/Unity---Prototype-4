@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Prototype4.Events.ScriptableObjects;
 using UnityEngine;
 
 namespace Prototype4
@@ -10,8 +11,10 @@ namespace Prototype4
       private int enemyCount;
       private int waveNumber = 1;
 
-      [SerializeField] private GameObject _enemyPrefab;
-      [SerializeField] private GameObject _powerUpPrefab;
+      [SerializeField] private GameObject _enemyPrefab = default;
+      [SerializeField] private GameObject _powerUpPrefab = default;
+      [Header("Broadcasts on")]
+      [SerializeField] private VoidEventChannelSO _newWaveSpawned = default;
 
       // Start is called before the first frame update
       private void Start()
@@ -40,6 +43,9 @@ namespace Prototype4
 
       private void SpawnEnemyWave(int enemiesToSpawn)
       {
+         // Notify UI about new wave incoming
+         _newWaveSpawned?.RaiseEvent();
+         // Spawn enemies at random locations
          for (int i = 0; i < enemiesToSpawn; i++)
          {
             Instantiate(_enemyPrefab, GenerateSpawnPosition(), _enemyPrefab.transform.rotation);
