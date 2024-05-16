@@ -3,12 +3,8 @@ using Prototype4.Events.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Prototype4
-{
-   public class GameManager : MonoBehaviour
-   {
-      [SerializeField] private bool isGameRunning = false;
-
+namespace Prototype4 {
+   public class GameManager : MonoBehaviour {
       [SerializeField] private GameObject _player = default;
       [SerializeField] private GameObject _spawnManager = default;
 
@@ -17,40 +13,44 @@ namespace Prototype4
 
       [Header("Listens on")]
       [SerializeField] private VoidEventChannelSO _startGame = default;
+      [SerializeField] private VoidEventChannelSO _enemyDestroyed = default;
+
+      [SerializeField] private int enemyCount = 0;
+      private bool isGameRunning = false;
 
       // Start is called before the first frame update
-      private void Start()
-      {
+      private void Start() {
 
       }
 
       // Update is called once per frame
-      private void Update()
-      {
-         if (IsGameRunning() && _player == null)
-         {
+      private void Update() {
+         if (IsGameRunning() && _player == null) {
             EndGame();
          }
       }
 
-      private void OnEnable()
-      {
-         if (_startGame != null)
-         {
+      private void OnEnable() {
+         if (_startGame != null) {
             _startGame.OnEventRaised += StartGame;
          }
-      }
 
-      private void OnDisable()
-      {
-         if (_startGame != null)
-         {
-            _startGame.OnEventRaised -= StartGame;
+         if (_enemyDestroyed != null) {
+            _enemyDestroyed.OnEventRaised += IncreaseEnemyCount;
          }
       }
 
-      private void StartGame()
-      {
+      private void OnDisable() {
+         if (_startGame != null) {
+            _startGame.OnEventRaised -= StartGame;
+         }
+
+         if (_enemyDestroyed != null) {
+            _enemyDestroyed.OnEventRaised -= IncreaseEnemyCount;
+         }
+      }
+
+      private void StartGame() {
          // Activate player and spawn manager
          _player.SetActive(true);
          _spawnManager.SetActive(true);
@@ -58,16 +58,22 @@ namespace Prototype4
          isGameRunning = true;
       }
 
-      private void EndGame()
-      {
+      private void EndGame() {
          isGameRunning = false;
          // Send event message
          _endGame?.RaiseEvent();
       }
 
-      public bool IsGameRunning()
-      {
+      private void IncreaseEnemyCount() {
+         enemyCount++;
+      }
+
+      public bool IsGameRunning() {
          return isGameRunning;
+      }
+
+      public int GetEnemyCount() {
+         return enemyCount;
       }
    }
 }
