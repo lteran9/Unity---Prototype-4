@@ -3108,12 +3108,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8afd7a5d4e3b7410db0ee12fbc924934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGameRunning: 0
   _player: {fileID: 558683793}
   _spawnManager: {fileID: 1675841365}
   _endGame: {fileID: 11400000, guid: 2ed60aeaf2d304199a7bc9361cdffbfb, type: 2}
   _startGame: {fileID: 11400000, guid: 35f09865ef8e94220bd22c1617813540, type: 2}
   _enemyDestroyed: {fileID: 11400000, guid: faf18ca6c99a444c2991649557d0fcae, type: 2}
+  enemyCount: 0
 --- !u!4 &1302200921
 Transform:
   m_ObjectHideFlags: 0
@@ -3714,10 +3714,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9a7fc4db2a0d4a6880157c4f219ab48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameManager: {fileID: 1302200920}
   _menuPanel: {fileID: 1087569261}
   _settingsPanel: {fileID: 1163223858}
   _gameOverPanel: {fileID: 967942287}
   _gameplayPanel: {fileID: 380259519}
+  _score: {fileID: 1051316150}
   _startGame: {fileID: 11400000, guid: 35f09865ef8e94220bd22c1617813540, type: 2}
   _endGame: {fileID: 11400000, guid: 2ed60aeaf2d304199a7bc9361cdffbfb, type: 2}
 --- !u!1001 &1549463980
@@ -3902,6 +3904,7 @@ MonoBehaviour:
   _powerUpPrefab: {fileID: 1508617706602427666, guid: d3521ed3024ca4ac59196a66d8342db5,
     type: 3}
   _newWaveSpawned: {fileID: 11400000, guid: e83747947185f407d97e611da716b949, type: 2}
+  _endGame: {fileID: 11400000, guid: 2ed60aeaf2d304199a7bc9361cdffbfb, type: 2}
 --- !u!4 &1675841367
 Transform:
   m_ObjectHideFlags: 0

@@ -6,16 +6,21 @@ using UnityEngine;
 
 namespace Prototype4 {
    public class SpawnManager : MonoBehaviour {
-      private int enemyCount;
-      private int waveNumber = 1;
+      private int enemyCount = 0,
+         waveNumber = 1;
+      private bool isGameRunning = false;
+
 
       [SerializeField] private GameObject _enemyPrefab = default;
       [SerializeField] private GameObject _powerUpPrefab = default;
       [Header("Broadcasts on")]
       [SerializeField] private VoidEventChannelSO _newWaveSpawned = default;
+      [Header("Listens on")]
+      [SerializeField] private VoidEventChannelSO _endGame = default;
 
       // Start is called before the first frame update
       private void Start() {
+         isGameRunning = true;
          SpawnEnemyWave(waveNumber);
          SpawnPowerUp();
       }
@@ -24,10 +29,22 @@ namespace Prototype4 {
       private void FixedUpdate() {
          enemyCount = FindObjectsOfType<Enemy>().Count();
 
-         if (enemyCount <= 0) {
+         if (isGameRunning && enemyCount <= 0) {
             waveNumber++;
             SpawnEnemyWave(waveNumber);
             SpawnPowerUp();
+         }
+      }
+
+      private void OnEnable() {
+         if (_endGame != null) {
+            _endGame.OnEventRaised += EndGame;
+         }
+      }
+
+      private void OnDisable() {
+         if (_endGame != null) {
+            _endGame.OnEventRaised -= EndGame;
          }
       }
 
@@ -35,6 +52,10 @@ namespace Prototype4 {
          Instantiate(_powerUpPrefab, GenerateSpawnPosition(), _powerUpPrefab.transform.rotation);
       }
 
+      /// <summary>
+      /// Method to spawn enemies.
+      /// </summary>
+      /// <param name="enemiesToSpawn">Number of enemies to spawn.</param>
       private void SpawnEnemyWave(int enemiesToSpawn) {
          // Notify UI about new wave incoming
          _newWaveSpawned?.RaiseEvent();
@@ -47,13 +68,17 @@ namespace Prototype4 {
       /// <summary>
       /// Return a random position within the bounding box.
       /// </summary>
-      /// <returns></returns>
+      /// <returns>The position of the spawn point.</returns>
       private Vector3 GenerateSpawnPosition() {
          // Set up the bounding box
          float spawnPosX = Random.Range(-9, 9);
          float spawnPosY = Random.Range(-9, 9);
 
          return new Vector3(spawnPosX, 0.15f, spawnPosY);
+      }
+
+      private void EndGame() {
+         isGameRunning = false;
       }
    }
 }

@@ -16,7 +16,7 @@ namespace Prototype4 {
       [SerializeField] private VoidEventChannelSO _enemyDestroyed = default;
 
       [SerializeField] private int enemyCount = 0;
-      private bool isGameRunning = false;
+      private bool isGameRunning = false, isGamePaused = false;
 
       // Start is called before the first frame update
       private void Start() {
@@ -25,8 +25,22 @@ namespace Prototype4 {
 
       // Update is called once per frame
       private void Update() {
-         if (IsGameRunning() && _player == null) {
-            EndGame();
+         if (IsGameRunning()) {
+            // Implement pause functionality
+            if (Input.GetButtonDown("Cancel")) {
+               if (isGamePaused) {
+                  Time.timeScale = 1;
+                  isGamePaused = false;
+               } else {
+                  Time.timeScale = 0;
+                  isGamePaused = true;
+               }
+            }
+
+            // Game over
+            if (_player == null) {
+               EndGame();
+            }
          }
       }
 
